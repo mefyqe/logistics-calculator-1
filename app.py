@@ -126,9 +126,29 @@ with tab1:
         invoice_rub = invoice_usd * st.session_state.USD_RUB
         st.caption(f"В рублях: {invoice_rub:,.2f} ₽")
 
-        st.divider()
+                st.divider()
         st.header("📋 Таможня")
         calc_customs_flag = st.checkbox("Рассчитать таможенные платежи", value=False)
+
+        if calc_customs_flag:
+            duty_rate = st.number_input(
+                "Ставка пошлины (%)",
+                min_value=0.0,
+                max_value=100.0,
+                value=7.5,
+                step=0.1,
+                format="%.1f",
+                key="duty_rate_input"
+            )
+            vat_rate = st.number_input(
+                "Ставка НДС (%)",
+                min_value=0.0,
+                max_value=100.0,
+                value=22.0,
+                step=1.0,
+                format="%.0f",
+                key="vat_rate_input"
+            )
 
     with col_result:
         st.header("📊 Результаты")
