@@ -69,8 +69,6 @@ FEE_SCHEDULE = [
     (2700000, 13541), (4200000, 18465), (5500000, 21344),
     (10000000, 49240), (float('inf'), 73860)
 ]
-DUTY_RATE = 0.075
-VAT_RATE = 0.22
 
 # -------------------- ФУНКЦИИ --------------------
 def calc_volume(l_m, w_m, h_m, qty):
@@ -126,7 +124,7 @@ with tab1:
         invoice_rub = invoice_usd * st.session_state.USD_RUB
         st.caption(f"В рублях: {invoice_rub:,.2f} ₽")
 
-                st.divider()
+        st.divider()
         st.header("📋 Таможня")
         calc_customs_flag = st.checkbox("Рассчитать таможенные платежи", value=False)
 
@@ -232,12 +230,10 @@ with tab1:
             st.metric("Стоимость довоза", f"{dovoz_cost:,.2f} ₽")
 
         # Таможня
-               # Таможня
         if calc_customs_flag:
             st.divider()
             st.header("🏛️ Таможенные платежи")
 
-            # Конвертация процентов в доли
             duty_rate_decimal = duty_rate / 100.0
             vat_rate_decimal = vat_rate / 100.0
 
