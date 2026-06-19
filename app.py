@@ -232,20 +232,25 @@ with tab1:
             st.metric("Стоимость довоза", f"{dovoz_cost:,.2f} ₽")
 
         # Таможня
+               # Таможня
         if calc_customs_flag:
             st.divider()
             st.header("🏛️ Таможенные платежи")
 
+            # Конвертация процентов в доли
+            duty_rate_decimal = duty_rate / 100.0
+            vat_rate_decimal = vat_rate / 100.0
+
             t_val = (invoice_usd + cost_rail_usd) * usd
-            duty = t_val * DUTY_RATE
-            vat = (t_val + duty) * VAT_RATE
+            duty = t_val * duty_rate_decimal
+            vat = (t_val + duty) * vat_rate_decimal
             fee = calc_customs_fee(t_val)
             total_customs = duty + vat + fee
 
             col1, col2, col3, col4 = st.columns(4)
             col1.metric("Тамож. стоимость", f"{t_val:,.2f} ₽")
-            col2.metric("Пошлина (7,5%)", f"{duty:,.2f} ₽")
-            col3.metric("НДС (22%)", f"{vat:,.2f} ₽")
+            col2.metric(f"Пошлина ({duty_rate:.1f}%)", f"{duty:,.2f} ₽")
+            col3.metric(f"НДС ({vat_rate:.0f}%)", f"{vat:,.2f} ₽")
             col4.metric("Тамож. сбор", f"{fee:,.2f} ₽")
 
             st.metric("### Итого таможенных платежей", f"{total_customs:,.2f} ₽")
